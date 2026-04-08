@@ -38,14 +38,14 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            mv target/release/jiggler.exe jiggler-windows.exe
-            echo "ASSET_PATH=jiggler-windows.exe" >> $GITHUB_ENV
+            mv target/release/PCILeechGui.exe PCILeechGui-windows.exe
+            echo "ASSET_PATH=PCILeechGui-windows.exe" >> $GITHUB_ENV
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            mv target/release/jiggler jiggler-macos
-            echo "ASSET_PATH=jiggler-macos" >> $GITHUB_ENV
+            mv target/release/PCILeechGui PCILeechGui-macos
+            echo "ASSET_PATH=PCILeechGui-macos" >> $GITHUB_ENV
           else
-            mv target/release/jiggler jiggler-linux
-            echo "ASSET_PATH=jiggler-linux" >> $GITHUB_ENV
+            mv target/release/PCILeechGui PCILeechGui-linux
+            echo "ASSET_PATH=PCILeechGui-linux" >> $GITHUB_ENV
           fi
 
       - name: Upload Release Asset
