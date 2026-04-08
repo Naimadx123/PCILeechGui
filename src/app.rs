@@ -1,8 +1,31 @@
 use eframe::egui;
 use std::sync::{Arc, Mutex};
-use std::time::{SystemTime, UNIX_EPOCH};
 use eframe::egui::{FontId, RichText, TextEdit};
 use crate::pcileech;
+
+struct CommandDefinition {
+    label: &'static str,
+    command: &'static str,
+}
+
+const QUICK_COMMANDS: &[CommandDefinition] = &[
+    CommandDefinition {
+        label: "Probe Device",
+        command: "probe"
+    },
+    CommandDefinition {
+        label: "Inject \"5x shift = CMD\"",
+        command: "patch -sig stickykeys_cmd_win.sig -all -psname winlogon.exe",
+    },
+];
+
+const OTHER_COMMANDS: &[CommandDefinition] = &[
+    CommandDefinition { label: "Display (0-1000)", command: "display -min 0x0 -max 0x1000" },
+    CommandDefinition { label: "Display (1000)", command: "display -min 0x1000" },
+    CommandDefinition { label: "KMD Load", command: "kmdload -kmd win7_x64" },
+    CommandDefinition { label: "Dump Memory", command: "dump --out mem_dump.raw" },
+    CommandDefinition { label: "Help", command: "help" },
+];
 
 pub struct PciLeechApp {
     pub command_args: String,
@@ -68,37 +91,22 @@ impl eframe::App for PciLeechApp {
                 let is_running = *self.is_running.lock().unwrap();
                 ui.add_enabled_ui(!is_running, |ui| {
                     ui.horizontal(|ui| {
-                        if ui.button("Probe Device").clicked() {
-                            self.command_args = "probe".to_owned();
-                            self.run_pcileech();
-                        }
-                        if ui.button("Inject CMD").clicked() {
-                            self.command_args = "patch -sig stickykeys_cmd_win.sig -all -psname winlogon.exe".to_owned();
-                            self.run_pcileech();
+                        for cmd in QUICK_COMMANDS {
+                            if ui.button(cmd.label).clicked() {
+                                self.command_args = cmd.command.to_owned();
+                                self.run_pcileech();
+                            }
                         }
                     });
 
                     ui.label("Other Commands:");
                     ui.horizontal_wrapped(|ui| {
-                        if ui.button("Display (0-1000)").clicked() {
-                            self.command_args = "display -min 0x0 -max 0x1000".to_owned();
+                        for cmd in OTHER_COMMANDS {
+                            if ui.button(cmd.label).clicked() {
+                                self.command_args = cmd.command.to_owned();
+                            }
                         }
-                        if ui.button("Display (1000)").clicked() {
-                            self.command_args = "display -min 0x1000".to_owned();
-                        }
-                        if ui.button("Dump Memory").clicked() {
-                            let now = SystemTime::now();
-                            let timestamp_ms = now.duration_since(UNIX_EPOCH)
-                                .unwrap()
-                                .as_millis();
-                            self.command_args = format!("dump --out \"mem_dump_{}.raw\"", timestamp_ms).to_owned();
-                        }
-                        if ui.button("KMD Load").clicked() {
-                            self.command_args = "kmdload -kmd win7_x64".to_owned();
-                        }
-                        if ui.button("Help").clicked() {
-                            self.command_args = "help".to_owned();
-                        }
+
                     });
                 });
 
