@@ -1,0 +1,8 @@
+[package]
+name = "PCILeechGui"
+version = "0.1.0"
+edition = "2024"
+authors = ["Naimad"]
+
+[dependencies]
+eframe = "0.34.1"
