@@ -1,11 +1,11 @@
 [package]
 name = "PCILeechGui"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2024"
 authors = ["Naimad"]
 
 [dependencies]
-eframe = "0.34.1"
+eframe = { version = "0.34.1", default-features = false, features = ["glow", "accesskit", "default_fonts"]}
 
 [profile.release]
 opt-level = "z"
