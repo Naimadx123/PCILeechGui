@@ -32,7 +32,7 @@ To build the project from source, you need to have [Rust](https://www.rust-lang.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/PCILeechGui.git
+   git clone https://github.com/Naimadx123/PCILeechGui.git
    cd PCILeechGui
    ```
 
