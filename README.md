@@ -25,7 +25,7 @@ A lightweight graphical user interface (GUI) wrapper for [PCILeech](https://gith
 ## Installation / Building
 
 ### Download Executables
-Latest executables for **Windows**, **Linux**, and **macOS** are available in the [GitHub Releases](https://github.com/yourusername/PCILeechGui/releases).
+The latest executables for **Windows**, **Linux**, and **macOS** are available in the [GitHub Releases](https://github.com/yourusername/PCILeechGui/releases).
 
 ### Build from Source
 To build the project from source, you need to have [Rust](https://www.rust-lang.org/) installed.
